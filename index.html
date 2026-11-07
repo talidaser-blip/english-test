@@ -1,1 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Trainer Lab (Color Test)</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --bg: #d6f5f3;
+      --card-bg: #ebfcfa;
+      --card-inner: #dcf8f5;
+      --border: #7dd3fc;
+      --accent: #0284c7;
+      --accent-hover: #0369a1;
+      --teal: #10b981;
+      --berry: #fb7185;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --success: #059669;
+      --danger: #f43f5e;
+      --shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.18);
+    }
 
+    body[data-theme="1"] {
+      --bg: #d6f5f3; --card-bg: #ebfcfa; --card-inner: #dcf8f5;
+      --border: #7dd3fc; --accent: #0284c7; --accent-hover: #0369a1;
+      --teal: #10b981; --berry: #fb7185; --text: #0f172a; --text-muted: #475569;
+      --success: #059669; --danger: #f43f5e;
+    }
+    body[data-theme="2"] {
+      --bg: #e0f7fa; --card-bg: #f0fdff; --card-inner: #dff6fa;
+      --border: #67e8f9; --accent: #0ea5e9; --accent-hover: #0284c7;
+      --teal: #84cc16; --berry: #f43f5e; --text: #082f49; --text-muted: #334155;
+      --success: #65a30d; --danger: #e11d48;
+    }
+    body[data-theme="3"] {
+      --bg: #e8fccf; --card-bg: #f5fee8; --card-inner: #dcfbb2;
+      --border: #bef264; --accent: #00b4d8; --accent-hover: #0096c7;
+      --teal: #58cc02; --berry: #ff5a5f; --text: #14532d; --text-muted: #3f6212;
+      --success: #46a302; --danger: #e11d48;
+    }
+    body[data-theme="4"] {
+      --bg: #cffafe; --card-bg: #e6fffa; --card-inner: #bbf7d0;
+      --border: #5eead4; --accent: #06b6d4; --accent-hover: #0891b2;
+      --teal: #14b8a6; --berry: #f87171; --text: #134e4a; --text-muted: #27272a;
+      --success: #0d9488; --danger: #f43f5e;
+    }
+    body[data-theme="5"] {
+      --bg: #d1fae5; --card-bg: #eefcf5; --card-inner: #c6f6d5;
+      --border: #86efac; --accent: #0284c7; --accent-hover: #0369a1;
+      --teal: #16a34a; --berry: #ea580c; --text: #064e3b; --text-muted: #374151;
+      --success: #15803d; --danger: #e11d48;
+    }
+    body[data-theme="6"] {
+      --bg: #ccfbf1; --card-bg: #e0fdf4; --card-inner: #bbf7d0;
+      --border: #6ee7b7; --accent: #2563eb; --accent-hover: #1d4ed8;
+      --teal: #22c55e; --berry: #ec4899; --text: #1e293b; --text-muted: #475569;
+      --success: #16a34a; --danger: #db2777;
+    }
+    body[data-theme="7"] {
+      --bg: #bae6fd; --card-bg: #e0f2fe; --card-inner: #cce7fc;
+      --border: #93c5fd; --accent: #0369a1; --accent-hover: #075985;
+      --teal: #65a30d; --berry: #e11d48; --text: #082f49; --text-muted: #1e3a8a;
+      --success: #4d7c0f; --danger: #be123c;
+    }
+    body[data-theme="8"] {
+      --bg: #ecfccb; --card-bg: #f7fee7; --card-inner: #d9f99d;
+      --border: #bef264; --accent: #0284c7; --accent-hover: #0369a1;
+      --teal: #4ade80; --berry: #f97316; --text: #14532d; --text-muted: #3f6212;
+      --success: #16a34a; --danger: #ea580c;
+    }
+    body[data-theme="9"] {
+      --bg: #d5f3f4; --card-bg: #eafafb; --card-inner: #c6eef1;
+      --border: #67e8f9; --accent: #0891b2; --accent-hover: #0e7490;
+      --teal: #22c55e; --berry: #e879f9; --text: #155e75; --text-muted: #1e293b;
+      --success: #15803d; --danger: #c026d3;
+    }
+    body[data-theme="10"] {
+      --bg: #dcfce7; --card-bg: #f0fdf4; --card-inner: #bbf7d0;
+      --border: #86efac; --accent: #0ea5e9; --accent-hover: #0284c7;
+      --teal: #15803d; --berry: #f43f5e; --text: #052e16; --text-muted: #14532d;
+      --success: #166534; --danger: #e11d48;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { 
+      background-color: var(--bg); 
+      color: var(--text); 
+      padding: 20px; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh;
+      transition: background-color 0.25s ease;
+    }
+    .container { width: 100%; max-width: 940px; display: flex; flex-direction: column; gap: 20px; }
+    
+    .header-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 18px 26px;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+    .balance-title { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 800; }
+    .balance-value { font-size: 34px; font-weight: 800; color: var(--berry); margin-top: 2px; }
+    
+    .selectors-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .control-select {
+      background: var(--card-bg);
+      color: var(--text);
+      border: 2px solid var(--border);
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+    }
+    .theme-select {
+      background: var(--card-inner);
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      font-weight: 800;
+    }
+
+    .trainer-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: 20px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .phrase-box {
+      background: var(--card-inner);
+      border: 2px solid var(--border);
+      padding: 28px 24px;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      min-height: 120px;
+      text-align: center;
+    }
+    .phrase-text { font-size: 26px; font-weight: 800; line-height: 1.5; color: var(--text); }
+
+    .input-group { display: flex; gap: 10px; align-items: center; width: 100%; }
+    input[type="text"] {
+      flex: 1;
+      width: 100%;
+      background: #ffffff;
+      border: 2px solid var(--border);
+      color: var(--text);
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      outline: none;
+    }
+    input[type="text"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25); }
+
+    .btn-action {
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 16px 30px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .btn-mic {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      color: var(--accent);
+      padding: 14px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    .status-line { font-size: 17px; padding: 16px 20px; border-radius: 12px; font-weight: 800; display: none; }
+    .status-line.correct { background: #ecfdf5; border: 2px solid #34d399; color: var(--success); display: block; }
+    .status-line.wrong { background: #fff1f2; border: 2px solid #fda4af; color: var(--danger); display: block; }
+  </style>
+</head>
+<body data-theme="1">
+
+<div class="container">
+  <div class="header-card">
+    <div>
+      <div class="balance-title">Баланс (Пример штрафа)</div>
+      <div class="balance-value">-25 ₽</div>
+    </div>
+
+    <div class="selectors-row">
+      <!-- ВЫБОР ИЗ 10 ПАЛИТР -->
+      <select class="control-select theme-select" id="themeSelector" onchange="changeTheme(this.value)">
+        <option value="1">🎨 1. Лайм & Океан</option>
+        <option value="2">🎨 2. Неон Цитрус & Небо</option>
+        <option value="3">🎨 3. Duolingo Салат</option>
+        <option value="4">🎨 4. Майами Циан & Мята</option>
+        <option value="5">🎨 5. Тропик & Манго</option>
+        <option value="6">🎨 6. Кибер-Мята</option>
+        <option value="7">🎨 7. Тропик Лагуна</option>
+        <option value="8">🎨 8. Весенний Лайм</option>
+        <option value="9">🎨 9. Аквамарин Свежесть</option>
+        <option value="10">🎨 10. Альпийский Луг</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="trainer-card">
+    <div class="phrase-box">
+      <div class="phrase-text">Он работает так много.</div>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="demoInput" placeholder="Введите перевод на английский..." value="He works so much.">
+      <button class="btn-mic">🎙️</button>
+      <button class="btn-action" onclick="toggleDemoResult()">OK</button>
+    </div>
+
+    <div class="status-line correct" id="demoSuccess">✓ ВЕЛИКОЛЕПНО! Ответ правильный (+5 ₽)</div>
+  </div>
+</div>
+
+<script>
+  function changeTheme(themeId) {
+    document.body.setAttribute('data-theme', themeId);
+    localStorage.setItem('english_lab_theme', themeId);
+  }
+
+  function toggleDemoResult() {
+    const el = document.getElementById('demoSuccess');
+    if (el.classList.contains('correct')) {
+      el.className = 'status-line wrong';
+      el.innerText = '✕ ОШИБКА (-5 ₽) | Мягкий не раздражающий цвет штрафа';
+    } else {
+      el.className = 'status-line correct';
+      el.innerText = '✓ ВЕЛИКОЛЕПНО! Ответ правильный (+5 ₽)';
+      if (typeof confetti === 'function') confetti({ particleCount: 70, spread: 60 });
+    }
+  }
+
+  window.onload = () => {
+    const saved = localStorage.getItem('english_lab_theme') || '1';
+    document.body.setAttribute('data-theme', saved);
+    document.getElementById('themeSelector').value = saved;
+  };
+</script>
+</body>
+</html>
